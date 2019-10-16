@@ -3,9 +3,9 @@ spring:
     name: dglue-admin
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/dglue?useUnicode=true&characterEncoding=GBK
-      username: root
-      password: root
+      url: jdbc:mysql://192.168.1.13:3308/xxl-glue?useUnicode=true&characterEncoding=GBK
+      username: tbj
+      password: tbj900900
       filters: stat
       max-active: 20
       initial-size: 1
@@ -27,7 +27,7 @@ logging:
   path: /Users/jierui/Downloads/logs
 
 mybatis:
-  mapper-locations: classpath*:mybatis-mapper/*.xml
+  mapper-locations: classpath*:mybatis-mapper/*mapper.xml
   type-aliases-package: com.ars.dglue.admin.model
   configuration:
     map-underscore-to-camel-case: true

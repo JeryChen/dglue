@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ars.dglue.admin.dao.DglueRuleDAO">
+
+    <resultMap id="BaseResultMap" type="com.ars.dglue.admin.model.DglueRule">
+        <id column="id" jdbcType="BIGINT"  property="id" />
+        <result column="app_code" jdbcType="VARCHAR" property="appCode"/>
+        <result column="rule_code" jdbcType="VARCHAR" property="ruleCode"/>
+        <result column="rule_name" jdbcType="VARCHAR" property="ruleName"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="source" jdbcType="VARCHAR" property="source"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="creator" jdbcType="VARCHAR" property="creator"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="modifier" jdbcType="VARCHAR" property="modifier"/>
+    </resultMap>
+
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+        id,
+            app_code,
+            rule_code,
+            rule_name,
+            version,
+            source,
+            create_time,
+            creator,
+            modify_time,
+            modifier
+        </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from dglue_rule
+        where id = #{id}
+    </select>
+
+    <!-- 新增一条记录 -->
+    <insert id="insert" parameterType="com.ars.dglue.admin.model.DglueRule" useGeneratedKeys="true" keyProperty="id">
+        insert into dglue_rule (<include refid="Base_Column_List" />)
+        values(
+        #{id, jdbcType=BIGINT},
+            #{appCode, jdbcType=VARCHAR},
+            #{ruleCode, jdbcType=VARCHAR},
+            #{ruleName, jdbcType=VARCHAR},
+            #{version, jdbcType=INTEGER},
+            #{source, jdbcType=VARCHAR},
+            #{createTime, jdbcType=TIMESTAMP},
+            #{creator, jdbcType=VARCHAR},
+            #{modifyTime, jdbcType=TIMESTAMP},
+            #{modifier, jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.ars.dglue.admin.model.DglueRule">
+        update dglue_rule
+        <set>
+            <if test="appCode != null">
+                app_code = #{appCode, jdbcType=VARCHAR},
+            </if>
+            <if test="ruleCode != null">
+                rule_code = #{ruleCode, jdbcType=VARCHAR},
+            </if>
+            <if test="ruleName != null">
+                rule_name = #{ruleName, jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version, jdbcType=INTEGER},
+            </if>
+            <if test="source != null">
+                source = #{source, jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null">
+                creator = #{creator, jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifier != null">
+                modifier = #{modifier, jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id} limit 1
+    </update>
+
+    <!-- 等值查询条件 -->
+    <sql id="Equal_Where_List">
+        <if test="appCode != null">
+            and app_code = #{appCode, jdbcType=VARCHAR}
+        </if>
+        <if test="ruleCode != null">
+            and rule_code = #{ruleCode, jdbcType=VARCHAR}
+        </if>
+        <if test="ruleName != null">
+            and rule_name = #{ruleName, jdbcType=VARCHAR}
+        </if>
+        <if test="version != null">
+            and version = #{version, jdbcType=INTEGER}
+        </if>
+        <if test="source != null">
+            and source = #{source, jdbcType=VARCHAR}
+        </if>
+        <if test="creator != null">
+            and creator = #{creator, jdbcType=VARCHAR}
+        </if>
+        <if test="modifier != null">
+            and modifier = #{modifier, jdbcType=VARCHAR}
+        </if>
+    </sql>
+
+    <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
+    <sql id="Range_Where_List">
+        <if test="createTimeFrom != null">
+            <![CDATA[
+            and create_time >= #{createTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeTo != null">
+            <![CDATA[
+            and create_time <= #{createTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="modifyTimeFrom != null">
+            <![CDATA[
+            and modify_time >= #{modifyTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="modifyTimeTo != null">
+            <![CDATA[
+            and modify_time <= #{modifyTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </sql>
+
+    <!-- 上次查询Id最大值 -->
+    <sql id="GtLastMaxId_Where">
+        <if test="lastMaxId != null and lastMaxId > 0">
+            and id > #{lastMaxId}
+        </if>
+    </sql>
+
+     <!-- 排序条件 -->
+    <sql id="Order_By">
+        <if test="sorts != null and sorts.size > 0">
+            ORDER BY
+            <foreach collection="sorts" item="sortItem" separator=",">
+                ${sortItem.column} ${sortItem.type.message}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据查询参数查询数据 -->
+    <select id="selectByCondition" parameterType="com.ars.dglue.admin.query.DglueRuleQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from dglue_rule
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+            <include refid="GtLastMaxId_Where" />
+        </where>
+        <include refid="Order_By"/>
+        <if test="limit > 0">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 根据查询参数查询数据总量 -->
+    <select id="countByCondition" parameterType="com.ars.dglue.admin.query.DglueRuleQuery" resultType="java.lang.Integer">
+        select count(1)
+        from dglue_rule
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+        </where>
+    </select>
+
+
+</mapper>
