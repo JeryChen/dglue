@@ -6,8 +6,10 @@
         <id column="id" jdbcType="BIGINT"  property="id" />
         <result column="rule_id" jdbcType="BIGINT" property="ruleId"/>
         <result column="app_code" jdbcType="VARCHAR" property="appCode"/>
-        <result column="code" jdbcType="VARCHAR" property="code"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="app_name" jdbcType="VARCHAR" property="appName"/>
+        <result column="rule_code" jdbcType="VARCHAR" property="ruleCode"/>
+        <result column="rule_name" jdbcType="VARCHAR" property="ruleName"/>
+        <result column="rule_type" jdbcType="TINYINT" property="ruleType"/>
         <result column="version" jdbcType="INTEGER" property="version"/>
         <result column="source" jdbcType="VARCHAR" property="source"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -19,8 +21,10 @@
         id,
             rule_id,
             app_code,
-            code,
-            name,
+            app_name,
+            rule_code,
+            rule_name,
+            rule_type,
             version,
             source,
             create_time,
@@ -42,8 +46,10 @@
         #{id, jdbcType=BIGINT},
             #{ruleId, jdbcType=BIGINT},
             #{appCode, jdbcType=VARCHAR},
-            #{code, jdbcType=VARCHAR},
-            #{name, jdbcType=VARCHAR},
+            #{appName, jdbcType=VARCHAR},
+            #{ruleCode, jdbcType=VARCHAR},
+            #{ruleName, jdbcType=VARCHAR},
+            #{ruleType, jdbcType=TINYINT},
             #{version, jdbcType=INTEGER},
             #{source, jdbcType=VARCHAR},
             #{createTime, jdbcType=TIMESTAMP},
@@ -61,11 +67,17 @@
             <if test="appCode != null">
                 app_code = #{appCode, jdbcType=VARCHAR},
             </if>
-            <if test="code != null">
-                code = #{code, jdbcType=VARCHAR},
+            <if test="appName != null">
+                app_name = #{appName, jdbcType=VARCHAR},
             </if>
-            <if test="name != null">
-                name = #{name, jdbcType=VARCHAR},
+            <if test="ruleCode != null">
+                rule_code = #{ruleCode, jdbcType=VARCHAR},
+            </if>
+            <if test="ruleName != null">
+                rule_name = #{ruleName, jdbcType=VARCHAR},
+            </if>
+            <if test="ruleType != null">
+                rule_type = #{ruleType, jdbcType=TINYINT},
             </if>
             <if test="version != null">
                 version = #{version, jdbcType=INTEGER},
@@ -91,11 +103,17 @@
         <if test="appCode != null">
             and app_code = #{appCode, jdbcType=VARCHAR}
         </if>
-        <if test="code != null">
-            and code = #{code, jdbcType=VARCHAR}
+        <if test="appName != null">
+            and app_name = #{appName, jdbcType=VARCHAR}
         </if>
-        <if test="name != null">
-            and name = #{name, jdbcType=VARCHAR}
+        <if test="ruleCode != null">
+            and rule_code = #{ruleCode, jdbcType=VARCHAR}
+        </if>
+        <if test="ruleName != null">
+            and rule_name = #{ruleName, jdbcType=VARCHAR}
+        </if>
+        <if test="ruleType != null">
+            and rule_type = #{ruleType, jdbcType=TINYINT}
         </if>
         <if test="version != null">
             and version = #{version, jdbcType=INTEGER}

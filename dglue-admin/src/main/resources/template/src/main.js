@@ -6,10 +6,13 @@ import router from './router'
 import Axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import VueCodemirror from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = Axios
 Vue.use(ElementUI, {size: 'small', zIndex: 3000})
+Vue.use(VueCodemirror)
 
 /* eslint-disable no-new */
 new Vue({

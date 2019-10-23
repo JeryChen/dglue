@@ -6,6 +6,8 @@
         <id column="id" jdbcType="BIGINT"  property="id" />
         <result column="app_code" jdbcType="VARCHAR" property="appCode"/>
         <result column="app_name" jdbcType="VARCHAR" property="appName"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="registry_type" jdbcType="TINYINT" property="registryType"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="creator" jdbcType="VARCHAR" property="creator"/>
         <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
@@ -17,6 +19,8 @@
         id,
             app_code,
             app_name,
+            address,
+            registry_type,
             create_time,
             creator,
             modify_time,
@@ -38,12 +42,18 @@
         #{id, jdbcType=BIGINT},
             #{appCode, jdbcType=VARCHAR},
             #{appName, jdbcType=VARCHAR},
+            #{address, jdbcType=VARCHAR},
+            #{registryType, jdbcType=TINYINT},
             #{createTime, jdbcType=TIMESTAMP},
             #{creator, jdbcType=VARCHAR},
             #{modifyTime, jdbcType=TIMESTAMP},
             #{modifier, jdbcType=VARCHAR}
             )
     </insert>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from dglue_app where id = #{id} limit 1
+    </delete>
 
     <!-- 根据主键更新数据 -->
     <update id="updateByPrimaryKeySelective" parameterType="com.ars.dglue.admin.model.DglueApp">
@@ -54,6 +64,12 @@
             </if>
             <if test="appName != null">
                 app_name = #{appName, jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address, jdbcType=VARCHAR},
+            </if>
+            <if test="registryType != null">
+                registry_type = #{registryType, jdbcType=TINYINT},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime, jdbcType=TIMESTAMP},
@@ -78,6 +94,12 @@
         </if>
         <if test="appName != null">
             and app_name = #{appName, jdbcType=VARCHAR}
+        </if>
+        <if test="address != null">
+            and address = #{address, jdbcType=VARCHAR}
+        </if>
+        <if test="registryType != null">
+            and registry_type = #{registryType, jdbcType=TINYINT}
         </if>
         <if test="creator != null">
             and creator = #{creator, jdbcType=VARCHAR}

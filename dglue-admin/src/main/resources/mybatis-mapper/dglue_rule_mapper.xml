@@ -5,8 +5,10 @@
     <resultMap id="BaseResultMap" type="com.ars.dglue.admin.model.DglueRule">
         <id column="id" jdbcType="BIGINT"  property="id" />
         <result column="app_code" jdbcType="VARCHAR" property="appCode"/>
+        <result column="app_name" jdbcType="VARCHAR" property="appName"/>
         <result column="rule_code" jdbcType="VARCHAR" property="ruleCode"/>
         <result column="rule_name" jdbcType="VARCHAR" property="ruleName"/>
+        <result column="rule_type" jdbcType="TINYINT" property="ruleType"/>
         <result column="version" jdbcType="INTEGER" property="version"/>
         <result column="source" jdbcType="VARCHAR" property="source"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -19,8 +21,10 @@
     <sql id="Base_Column_List">
         id,
             app_code,
+            app_name,
             rule_code,
             rule_name,
+            rule_type,
             version,
             source,
             create_time,
@@ -43,8 +47,10 @@
         values(
         #{id, jdbcType=BIGINT},
             #{appCode, jdbcType=VARCHAR},
+            #{appName, jdbcType=VARCHAR},
             #{ruleCode, jdbcType=VARCHAR},
             #{ruleName, jdbcType=VARCHAR},
+            #{ruleType, jdbcType=TINYINT},
             #{version, jdbcType=INTEGER},
             #{source, jdbcType=VARCHAR},
             #{createTime, jdbcType=TIMESTAMP},
@@ -54,6 +60,10 @@
             )
     </insert>
 
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from dglue_rule where id = #{id} limit 1
+    </delete>
+
     <!-- 根据主键更新数据 -->
     <update id="updateByPrimaryKeySelective" parameterType="com.ars.dglue.admin.model.DglueRule">
         update dglue_rule
@@ -61,11 +71,17 @@
             <if test="appCode != null">
                 app_code = #{appCode, jdbcType=VARCHAR},
             </if>
+            <if test="appName != null">
+                app_name = #{appName, jdbcType=VARCHAR},
+            </if>
             <if test="ruleCode != null">
                 rule_code = #{ruleCode, jdbcType=VARCHAR},
             </if>
             <if test="ruleName != null">
                 rule_name = #{ruleName, jdbcType=VARCHAR},
+            </if>
+            <if test="ruleType != null">
+                rule_type = #{ruleType, jdbcType=TINYINT},
             </if>
             <if test="version != null">
                 version = #{version, jdbcType=INTEGER},
@@ -94,11 +110,17 @@
         <if test="appCode != null">
             and app_code = #{appCode, jdbcType=VARCHAR}
         </if>
+        <if test="appName != null">
+            and app_name = #{appName, jdbcType=VARCHAR}
+        </if>
         <if test="ruleCode != null">
             and rule_code = #{ruleCode, jdbcType=VARCHAR}
         </if>
         <if test="ruleName != null">
             and rule_name = #{ruleName, jdbcType=VARCHAR}
+        </if>
+        <if test="ruleType != null">
+            and rule_type = #{ruleType, jdbcType=TINYINT}
         </if>
         <if test="version != null">
             and version = #{version, jdbcType=INTEGER}

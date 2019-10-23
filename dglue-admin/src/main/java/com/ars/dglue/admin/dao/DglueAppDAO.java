@@ -8,14 +8,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * 〈配置应用信息 DAO〉<p>
+ * 〈应用信息 DAO〉<p>
  * 〈功能详细描述〉
  *
  * @author
- * @date 2019-09-29
+ * @date 2019-10-21
  */
-@Mapper
 @Repository
+@Mapper
 public interface DglueAppDAO {
 
     /**
@@ -52,5 +52,13 @@ public interface DglueAppDAO {
      * @param query 查询参数
      */
     Integer countByCondition(DglueAppQuery query);
+
+    /**
+     * 根据主键id删除
+     *
+     * @param id 主键id
+     * @return 结果
+     */
+    int delete(Long id);
 
 }

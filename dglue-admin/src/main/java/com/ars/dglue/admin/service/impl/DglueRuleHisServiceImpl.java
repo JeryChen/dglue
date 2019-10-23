@@ -13,11 +13,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 〈逻辑规则历史版本信息 Service〉<p>
+ * 〈历史逻辑规则信息 Service〉<p>
  * 〈功能详细描述〉
  *
  * @author
- * @date 2019-09-29
+ * @date 2019-10-18
  */
 @Service
 public class DglueRuleHisServiceImpl implements DglueRuleHisService {
@@ -37,12 +37,6 @@ public class DglueRuleHisServiceImpl implements DglueRuleHisService {
     public DglueRuleHis getById(Long id) {
         Assert.notNull(id, "主键不能为空");
         return dglueRuleHisDAO.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public int updateById(DglueRuleHis record) {
-        Assert.notNull(record, "待更新记录不能为空");
-        return dglueRuleHisDAO.updateByPrimaryKeySelective(record);
     }
 
     @Override

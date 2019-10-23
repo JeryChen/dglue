@@ -1,13 +1,15 @@
 package com.ars.dglue.admin.model;
 
-import java.io.Serializable;
+import java.util.Date;
 import java.util.Date;
 
+import java.io.Serializable;
+
 /**
- * 〈逻辑规则信息〉<p>
+ * 〈逻辑规信息〉<p>
  *
  * @author
- * @date 2019-09-29
+ * @date 2019-10-18
  */
 @lombok.Data
 @lombok.ToString
@@ -35,6 +37,15 @@ public class DglueRule implements Serializable {
     private String appCode;
 
     /**
+     * 应用名称
+     *
+     * @最大长度   32
+     * @允许为空   NO
+     * @是否索引   NO
+     */
+    private String appName;
+
+    /**
      * 规则编号
      *
      * @最大长度   32
@@ -51,6 +62,14 @@ public class DglueRule implements Serializable {
      * @是否索引   NO
      */
     private String ruleName;
+
+    /**
+     * 类型 1 逻辑校验 2 逻辑处理
+     *
+     * @允许为空   NO
+     * @是否索引   NO
+     */
+    private Integer ruleType;
 
     /**
      * 版本

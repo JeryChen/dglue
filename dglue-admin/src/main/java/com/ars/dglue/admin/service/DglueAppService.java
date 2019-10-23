@@ -6,11 +6,11 @@ import com.ars.dglue.admin.query.DglueAppQuery;
 import java.util.List;
 
 /**
- * 〈配置应用信息 Service〉<p>
+ * 〈应用信息 Service〉<p>
  * 〈功能详细描述〉
  *
  * @author
- * @date 2019-09-29
+ * @date 2019-10-21
  */
 public interface DglueAppService {
 
@@ -48,4 +48,12 @@ public interface DglueAppService {
      * @param query 查询参数
      */
     int countByCondition(DglueAppQuery query);
+
+    /**
+     * 根据主键id删除
+     *
+     * @param id 主键id
+     * @return 结果
+     */
+    int delete(Long id);
 }

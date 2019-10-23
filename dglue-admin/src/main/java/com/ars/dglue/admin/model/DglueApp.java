@@ -1,19 +1,16 @@
 package com.ars.dglue.admin.model;
 
-import lombok.Data;
-import lombok.ToString;
-
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 〈配置应用信息〉<p>
+ * 〈应用信息〉<p>
  *
  * @author
- * @date 2019-09-29
+ * @date 2019-10-21
  */
-@Data
-@ToString
+@lombok.Data
+@lombok.ToString
 public class DglueApp implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,6 +42,23 @@ public class DglueApp implements Serializable {
      * @是否索引   NO
      */
     private String appName;
+
+    /**
+     * 注册地址
+     *
+     * @最大长度   65535
+     * @允许为空   NO
+     * @是否索引   NO
+     */
+    private String address;
+
+    /**
+     * 注册类型 1 自动注册 2 手动注册
+     *
+     * @允许为空   NO
+     * @是否索引   NO
+     */
+    private Integer registryType;
 
     /**
      * 创建时间

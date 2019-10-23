@@ -1,17 +1,19 @@
 package com.ars.dglue.admin.query;
 
+import com.ars.dglue.admin.utils.PagingQuery;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 〈配置应用信息 查询参数〉<p>
+ * 〈应用信息 查询参数〉<p>
  *
  * @author
- * @date 2019-09-29
+ * @date 2019-10-21
  */
 @lombok.Data
 @lombok.ToString(callSuper = true)
-public class DglueAppQuery implements Serializable {
+public class DglueAppQuery extends PagingQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,6 +26,16 @@ public class DglueAppQuery implements Serializable {
      * 应用名称
      */
     private String appName;
+
+    /**
+     * 注册地址
+     */
+    private String address;
+
+    /**
+     * 注册类型 1 自动注册 2 手动注册
+     */
+    private Integer registryType;
 
     /**
      * 创建时间 开始

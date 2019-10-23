@@ -13,11 +13,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 〈配置应用信息 Service〉<p>
+ * 〈应用信息 Service〉<p>
  * 〈功能详细描述〉
  *
  * @author
- * @date 2019-09-29
+ * @date 2019-10-21
  */
 @Service
 public class DglueAppServiceImpl implements DglueAppService {
@@ -56,5 +56,11 @@ public class DglueAppServiceImpl implements DglueAppService {
     public int countByCondition(DglueAppQuery query) {
         Assert.notNull(query, "查询条件不能为空");
         return dglueAppDAO.countByCondition(query);
+    }
+
+    @Override
+    public int delete(Long id) {
+        Assert.notNull(id, "待删除记录id不能为空");
+        return dglueAppDAO.delete(id);
     }
 }

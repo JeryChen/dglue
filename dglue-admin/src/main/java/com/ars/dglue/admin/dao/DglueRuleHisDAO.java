@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * 〈逻辑规则历史版本信息 DAO〉<p>
+ * 〈历史逻辑规则信息 DAO〉<p>
  * 〈功能详细描述〉
  *
  * @author
- * @date 2019-09-29
+ * @date 2019-10-18
  */
 @Repository
 @Mapper

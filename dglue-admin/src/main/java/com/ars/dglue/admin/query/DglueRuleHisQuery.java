@@ -1,17 +1,19 @@
 package com.ars.dglue.admin.query;
 
+import com.ars.dglue.admin.utils.PagingQuery;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 〈逻辑规则历史版本信息 查询参数〉<p>
+ * 〈历史逻辑规则信息 查询参数〉<p>
  *
  * @author
- * @date 2019-09-29
+ * @date 2019-10-18
  */
 @lombok.Data
 @lombok.ToString(callSuper = true)
-public class DglueRuleHisQuery implements Serializable {
+public class DglueRuleHisQuery extends PagingQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,14 +28,24 @@ public class DglueRuleHisQuery implements Serializable {
     private String appCode;
 
     /**
-     * 编号
+     * 应用名称
      */
-    private String code;
+    private String appName;
 
     /**
-     * 名称
+     * 规则编号
      */
-    private String name;
+    private String ruleCode;
+
+    /**
+     * 规则名称
+     */
+    private String ruleName;
+
+    /**
+     * 类型 1 逻辑校验 2 逻辑处理
+     */
+    private Integer ruleType;
 
     /**
      * 版本

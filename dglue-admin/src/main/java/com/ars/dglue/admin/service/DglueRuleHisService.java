@@ -6,11 +6,11 @@ import com.ars.dglue.admin.query.DglueRuleHisQuery;
 import java.util.List;
 
 /**
- * 〈逻辑规则历史版本信息 Service〉<p>
+ * 〈历史逻辑规则信息 Service〉<p>
  * 〈功能详细描述〉
  *
  * @author
- * @date 2019-09-29
+ * @date 2019-10-18
  */
 public interface DglueRuleHisService {
 
@@ -27,13 +27,6 @@ public interface DglueRuleHisService {
      * @param id 数据库ID
      */
     DglueRuleHis getById(Long id);
-
-    /**
-     * 根据id更新一条数据
-     *
-     * @param record 更新参数
-     */
-    int updateById(DglueRuleHis record);
 
     /**
      * 根据查询参数查询数据
