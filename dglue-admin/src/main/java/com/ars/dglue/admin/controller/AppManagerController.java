@@ -61,10 +61,10 @@ public class AppManagerController {
             result.setPagingQuery(pagingQuery);
             return result;
         } catch (IllegalArgumentException e) {
-            log.error("get all apps exception", e);
+            log.error("common search app info exception", e);
             return PlatResult.fail(e.getMessage());
         } catch (Exception e) {
-            log.error("get all apps exception", e);
+            log.error("common search app info exception", e);
             return PlatResult.fail("system error!");
         }
     }

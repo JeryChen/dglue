@@ -295,7 +295,7 @@
         })
       },
       getAllApps() {
-        this.$axios.get('app/apps')
+        this.$axios.get('/app/apps')
           .then(response => {
             if (response.data.code === 1) {
               this.apps = [];
@@ -323,25 +323,26 @@
         const pageNo = this.pageParams.pageNo;
         const pageSize = this.pageParams.pageSize;
         this.loading = true;
-        this.$axios.get('app/list', {
+        this.$axios.get('/app/list', {
           params: {appCode, appName, pageNo, pageSize}
         }).then(response => {
           if (response.data.code === 1) {
             this.tableData = [];
             this.tableData = response.data.resultObject ? response.data.resultObject : [];
             this.pageParams = response.data.pagingQuery;
-            this.loading = false;
           } else {
             this.$notify.error({
               title: '错误',
               message: response.data.message ? response.data.message : "系统异常，请联系管理员..."
             });
           }
+          this.loading = false;
         }).catch(error => {
           this.$notify.error({
             title: '错误',
             message: "系统异常，请稍后重试..."
           });
+          this.loading = false;
         })
       },
       deleteRow(index, rows) {
