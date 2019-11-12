@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import java.util.Date;
-
 /**
  * 〈一句话介绍功能〉<br>
  * 〈功能详细描述〉
@@ -71,7 +69,6 @@ public class AppProcessImpl implements AppProcess {
         BeanUtils.copyProperties(appVo, app);
         app.setAddress(RegistryTypeEnum.AUTO.getCode().equals(appVo.getRegistryType()) ? "" : appVo.getAddress());
         app.setModifier(UserHolder.getUser().getUsername());
-        app.setModifyTime(new Date());
         int result = dglueAppService.updateById(app);
         Assert.isTrue(result == 1, "更新应用配置失败");
     }

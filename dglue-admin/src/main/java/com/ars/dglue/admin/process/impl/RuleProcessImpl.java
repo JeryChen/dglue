@@ -3,10 +3,12 @@ package com.ars.dglue.admin.process.impl;
 import com.ars.dglue.admin.enums.RuleTypeEnum;
 import com.ars.dglue.admin.model.DglueApp;
 import com.ars.dglue.admin.model.DglueRule;
+import com.ars.dglue.admin.model.DglueRuleHis;
 import com.ars.dglue.admin.process.RuleProcess;
 import com.ars.dglue.admin.query.DglueAppQuery;
 import com.ars.dglue.admin.query.DglueRuleQuery;
 import com.ars.dglue.admin.service.DglueAppService;
+import com.ars.dglue.admin.service.DglueRuleHisService;
 import com.ars.dglue.admin.service.DglueRuleService;
 import com.ars.dglue.admin.utils.JavaSyntaxChecker;
 import com.ars.dglue.admin.utils.UserHolder;
@@ -14,10 +16,14 @@ import com.ars.dglue.admin.vo.RuleVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -36,8 +42,12 @@ public class RuleProcessImpl implements RuleProcess {
 
     private DglueAppService dglueAppService;
 
-    public RuleProcessImpl(DglueRuleService dglueRuleService) {
+    private DglueRuleHisService dglueRuleHisService;
+
+    public RuleProcessImpl(DglueRuleService dglueRuleService, DglueAppService dglueAppService, DglueRuleHisService dglueRuleHisService) {
         this.dglueRuleService = dglueRuleService;
+        this.dglueAppService = dglueAppService;
+        this.dglueRuleHisService = dglueRuleHisService;
     }
 
     /**
@@ -71,8 +81,25 @@ public class RuleProcessImpl implements RuleProcess {
      * @param ruleVo rule params
      */
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public void update(RuleVo ruleVo) {
-
+        validParams(ruleVo);
+        Assert.notNull(ruleVo.getId(), "待更新规则id不能为空");
+        DglueRule rule = dglueRuleService.getById(ruleVo.getId());
+        Assert.notNull(rule, "对应规则不存在");
+        DglueRule updateRule = new DglueRule();
+        updateRule.setId(rule.getId());
+        updateRule.setVersion(rule.getVersion() + 1);
+        updateRule.setModifier(UserHolder.getUser().getUsername());
+        int updateResult = dglueRuleService.updateById(updateRule);
+        Assert.isTrue(updateResult == 1, "更新规则配置失败");
+        DglueRuleHis ruleHis = new DglueRuleHis();
+        BeanUtils.copyProperties(rule, ruleHis);
+        ruleHis.setId(null);
+        ruleHis.setCreator(UserHolder.getUser().getUsername());
+        ruleHis.setRuleId(rule.getId());
+        DglueRuleHis saveRuleHisResult = dglueRuleHisService.save(ruleHis);
+        Assert.notNull(saveRuleHisResult.getId(), "更新规则配置失败");
     }
 
     /**
@@ -82,7 +109,11 @@ public class RuleProcessImpl implements RuleProcess {
      */
     @Override
     public void delete(Long ruleId) {
-
+        Assert.notNull(ruleId, "ruleId不能为空");
+        DglueRule rule = dglueRuleService.getById(ruleId);
+        Assert.notNull(rule, "对应规则不存在");
+        int result = dglueAppService.delete(ruleId);
+        Assert.isTrue(result == 1, "删除规则配置失败");
     }
 
     /**
