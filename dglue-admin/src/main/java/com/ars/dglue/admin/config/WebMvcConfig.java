@@ -1,7 +1,8 @@
 package com.ars.dglue.admin.config;
 
+import com.ars.commons.interceptor.LoginInterceptor;
 import com.ars.dglue.admin.controller.interceptor.AuthInterceptor;
-import com.ars.dglue.admin.controller.interceptor.LoginInterceptor;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,21 +19,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @since [产品/模块版本] （可选）
  */
 @Configuration
+@AllArgsConstructor
 public class WebMvcConfig extends ConfigurableWebBindingInitializer implements WebMvcConfigurer {
 
     private LoginInterceptor loginInterceptor;
 
     private AuthInterceptor authInterceptor;
 
-    public WebMvcConfig(LoginInterceptor loginInterceptor, AuthInterceptor authInterceptor) {
-        this.loginInterceptor = loginInterceptor;
-        this.authInterceptor = authInterceptor;
-    }
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/login");
-        registry.addInterceptor(authInterceptor).addPathPatterns("/auth/**").excludePathPatterns("/login");
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/user/login");
+        registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns("/user/login");
     }
 
     @Override

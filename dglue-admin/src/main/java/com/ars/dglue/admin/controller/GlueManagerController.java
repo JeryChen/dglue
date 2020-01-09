@@ -7,6 +7,7 @@ import com.ars.dglue.admin.service.DglueRuleService;
 import com.ars.dglue.admin.utils.PagingQuery;
 import com.ars.dglue.admin.utils.PlatResult;
 import com.ars.dglue.admin.vo.RuleVo;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,16 +25,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/glue")
 @Slf4j
+@AllArgsConstructor
 public class GlueManagerController {
 
     private DglueRuleService dglueRuleService;
 
     private RuleProcess ruleProcess;
-
-    public GlueManagerController(DglueRuleService dglueRuleService, RuleProcess ruleProcess) {
-        this.dglueRuleService = dglueRuleService;
-        this.ruleProcess = ruleProcess;
-    }
 
     /**
      * common search rule info

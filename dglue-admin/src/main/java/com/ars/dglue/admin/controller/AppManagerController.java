@@ -7,6 +7,7 @@ import com.ars.dglue.admin.service.DglueAppService;
 import com.ars.dglue.admin.utils.PagingQuery;
 import com.ars.dglue.admin.utils.PlatResult;
 import com.ars.dglue.admin.vo.AppVo;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
@@ -27,16 +28,12 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/app")
 @Slf4j
+@AllArgsConstructor
 public class AppManagerController {
 
     private DglueAppService dglueAppService;
 
     private AppProcess appProcess;
-
-    public AppManagerController(DglueAppService dglueAppService, AppProcess appProcess) {
-        this.dglueAppService = dglueAppService;
-        this.appProcess = appProcess;
-    }
 
     /**
      * common search app info

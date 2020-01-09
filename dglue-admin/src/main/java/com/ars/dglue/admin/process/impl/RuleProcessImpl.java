@@ -13,6 +13,7 @@ import com.ars.dglue.admin.service.DglueRuleService;
 import com.ars.dglue.admin.utils.JavaSyntaxChecker;
 import com.ars.dglue.admin.utils.UserHolder;
 import com.ars.dglue.admin.vo.RuleVo;
+import com.ars.dglue.client.core.GlueBroadcaster;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -157,7 +158,12 @@ public class RuleProcessImpl implements RuleProcess {
      */
     @Override
     public void publish(Long id) {
-
+        Assert.notNull(id, "ruleId不能为空");
+        DglueRule rule = dglueRuleService.getById(id);
+        Assert.notNull(rule, "对应规则不存在");
+        boolean result = GlueBroadcaster.getInstance().produceMessage(rule.getAppCode(), rule.getRuleCode(),
+                rule.getVersion());
+        Assert.isTrue(result, "规则发布失败");
     }
 
     /**

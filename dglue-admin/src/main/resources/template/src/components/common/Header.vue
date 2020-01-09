@@ -12,11 +12,6 @@
         </el-tooltip>
       </div>
 
-      <!--<div class="header-user-con">-->
-      <!-- 用户头像 -->
-      <!--<div class="user-avator"><img src="../../assets/logo.png"></div>-->
-      <!--</div>-->
-
       <el-dropdown class="user-name" trigger="click" @command="handleCommand">
          <span class="el-dropdown-link">
            {{username}} <i class="el-icon-caret-bottom"></i>
@@ -40,15 +35,13 @@
     data() {
       return {
         fullscreen: false,
-        name: '杰瑞',
         collapse: true,
       }
     },
 
     computed: {
       username() {
-        let username = localStorage.getItem('ms_username');
-        return username ? username : this.name;
+        return localStorage.getItem('username');
       }
     },
 
@@ -61,7 +54,7 @@
 
       handleCommand(command) {
         if (command == 'loginout') {
-          localStorage.removeItem('ms_username')
+          localStorage.removeItem('username')
           this.$router.push('/login');
         }
         if (command == 'changePassword') {

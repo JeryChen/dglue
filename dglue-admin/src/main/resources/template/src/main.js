@@ -22,3 +22,18 @@ new Vue({
   template: '<App/>',
   render: h => h(App)
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requireLogin)) {
+    if (localStorage.getItem('username')) {
+      next()
+    } else {
+      next({
+        path: '/login',
+        query: {redirect: to.fullPath}
+      })
+    }
+  } else {
+    next()
+  }
+})
